@@ -1,6 +1,8 @@
+//CODE FROM JULY 21, 2021 (in-class + intermediate + spicy stretch goals)
 let blocked = false;
 let count = 0;
-const getMessages = () =>{
+let passcodeButton = document.querySelector("#passcode");
+/*const getMessages = () =>{
     const messagesRef = firebase.database().ref();
     messagesRef.on('value', (snapshot) => {
         const data = snapshot.val();
@@ -13,7 +15,7 @@ const getMessages = () =>{
             }
         }
     });
-}
+}*/
 
 const findMessage = (myPass) =>{
     const messagesRef = firebase.database().ref();
@@ -42,9 +44,10 @@ const findMessage = (myPass) =>{
 }
 
 const renderMessage = (message) => {
-    // Hide Input Form
-    const msg = document.querySelector('#message');
+    // Hide Input Form (see viewMessages.HTML)
+    passcodeButton.value = '';
     // Render message as HTML
+    const msg = document.querySelector('#message');
     msg.innerHTML = message;
 }
 
@@ -61,9 +64,29 @@ function unblockUser()
 }
 
 document.querySelector("#viewMsg").addEventListener("click", ()=> {
-    const passcode = document.querySelector("#passcode").value;
+    const passcode = passcodeButton.value;
     if(!blocked)
     {
         findMessage(passcode);
     }
 });
+
+/*//CODE FROM JULY 22, 2021
+document.querySelector("#viewMsg").addEventListener("click", (e) => {
+    const userPasscodeGuess = document.querySelector("#passcode").value;
+
+    const messagesRef = firebase.database().ref();
+    messagesRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+        for(let key in data){
+            if(userPasscodeGuess == data[key]){
+                display(data[key]);
+            }
+        }
+    });
+
+    const display = (messageObject) =>{
+
+    }
+});*/
